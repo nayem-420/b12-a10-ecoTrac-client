@@ -1,10 +1,26 @@
 import React from 'react';
+import Banner from './Banner';
 
 const Home = () => {
     return (
-        <div>
-            <h1>this is the home</h1>
+      <div>
+        <Banner></Banner>
+        {/* Live Stats */}
+        <div className="grid grid-cols-3 text-center gap-3 mt-6">
+          <div className="bg-green-50 py-8 rounded-2xl">
+            <h3 className="text-3xl font-bold text-green-700">12,500 kg</h3>
+            <p>CO₂ Saved</p>
+          </div>
+          <div className="bg-green-50 py-8 rounded-2xl">
+            <h3 className="text-3xl font-bold text-green-700">3,200 kg</h3>
+            <p>Plastic Reduced</p>
+          </div>
+          <div className="bg-green-50 py-8 rounded-2xl">
+            <h3 className="text-3xl font-bold text-green-700">1,245+</h3>
+            <p>Active Members</p>
+          </div>
         </div>
+      </div>
     );
 };
 
