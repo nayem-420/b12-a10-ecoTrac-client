@@ -1,0 +1,52 @@
+[
+  {
+    "_id": "p1",
+    "name": "Eco-Friendly Bamboo Toothbrush",
+    "image": "https://i.ibb.co/9q6vQwF/bamboo-brush.jpg",
+    "price": 150,
+    "category": "Personal Care",
+    "description": "A biodegradable bamboo toothbrush designed for a sustainable lifestyle.",
+    "seller_name": "Imran Hasan Nayem",
+    "seller_email": "nayem@example.com"
+  },
+  {
+    "_id": "p2",
+    "name": "Solar Powered Lantern",
+    "image": "https://i.ibb.co/1GK2wDv/solar-lantern.jpg",
+    "price": 900,
+    "category": "Electronics",
+    "description": "Portable lantern charged by solar energy. Perfect for outdoor camping.",
+    "seller_name": "Rafi Khan",
+    "seller_email": "rafi@example.com"
+  },
+  {
+    "_id": "p3",
+    "name": "Recycled Notebook",
+    "image": "https://i.ibb.co/b2yNP1D/recycled-notebook.jpg",
+    "price": 250,
+    "category": "Stationery",
+    "description": "Notebook made from 100% recycled paper for eco-conscious users.",
+    "seller_name": "Anika Rahman",
+    "seller_email": "anika@example.com"
+  },
+  {
+    "_id": "p4",
+    "name": "Reusable Steel Straw Set",
+    "image": "https://i.ibb.co/2M8ccZj/steel-straw.jpg",
+    "price": 120,
+    "category": "Home",
+    "description": "Set of reusable steel straws with cleaner brush — say no to plastic!",
+    "seller_name": "Sadia Hasan",
+    "seller_email": "sadia@example.com"
+  },
+  {
+    "_id": "p5",
+    "name": "Compostable Food Container",
+    "image": "https://i.ibb.co/s19bxSR/eco-container.jpg",
+    "price": 320,
+    "category": "Kitchen",
+    "description": "Made from cornstarch — fully compostable and safe for the environment.",
+    "seller_name": "Arif Rahman",
+    "seller_email": "arif@example.com"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "b1",
+    "product": "p2",
+    "buyer_image": "https://i.ibb.co/NxqZf2T/buyer1.jpg",
+    "buyer_email": "user1@gmail.com",
+    "offer_price": 850,
+    "bid_date": "2025-11-10"
+  },
+  {
+    "_id": "b2",
+    "product": "p4",
+    "buyer_image": "https://i.ibb.co/8XYkkJb/buyer2.jpg",
+    "buyer_email": "user2@gmail.com",
+    "offer_price": 110,
+    "bid_date": "2025-11-10"
+  },
+  {
+    "_id": "b3",
+    "product": "p3",
+    "buyer_image": "https://i.ibb.co/fp1bTzM/buyer3.jpg",
+    "buyer_email": "user3@gmail.com",
+    "offer_price": 230,
+    "bid_date": "2025-11-11"
+  }
+]
