@@ -42,7 +42,7 @@ const Challenges = () => {
 
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.slice(0, 3).map((product, i) => (
+          {products.map((product, i) => (
             <motion.div
               key={product._id}
               className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg cursor-pointer"

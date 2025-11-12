@@ -1,15 +1,17 @@
 import { createBrowserRouter } from "react-router";
 import MainLayOuts from "../Layouts/MainLayOuts";
 import Home from "../Pages/Home";
-import AllChallenges from "../Pages/AllChallenges";
 import ChallengeDetail from "../Pages/ChallengeDetail";
-import JoinChallenge from "../Pages/JoinChallenge";
 import MyActivities from "../Pages/MyActivities";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import ForgetPassword from "../Pages/ForgetPassword";
 import NotFound from "../Components/NotFound";
 import PrivateRoute from "../Components/PrivateRoute";
+import Challenges from "../Pages/Challenges";
+import AllChallenges from "../Pages/AllChallenge";
+import JoinChallenge from "../Pages/JoinChallenge";
+import AddChallenge from "../Pages/AddChallenge";
 
 export const router = createBrowserRouter([
   {
@@ -23,11 +25,17 @@ export const router = createBrowserRouter([
       // Public Routes
       {
         path: "/challenges",
-        element: <AllChallenges />, // Browse all challenges
+        element: <Challenges />,
+        children: [
+          {
+            path: "/challenges",
+            element: <AllChallenges />,
+          },
+        ],
       },
       {
         path: "/challenges/:id",
-        element: <ChallengeDetail />, // Challenge detail (public)
+        element: <ChallengeDetail />,
       },
       {
         path: "/login",
