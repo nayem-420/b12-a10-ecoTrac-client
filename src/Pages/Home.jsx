@@ -4,6 +4,7 @@ import ChallengeCard from "../Layouts/ChallengeCard";
 import Challenges from "./Challenges";
 import Loading from "../Layouts/Loading";
 import WhyGoGreen from "./WhyGoGreen";
+import HowItWorks from "./HowItWorks";
 
 const Home = () => {
   return (
@@ -27,6 +28,7 @@ const Home = () => {
         <Challenges></Challenges>
       </Suspense>
       <WhyGoGreen></WhyGoGreen>
+      <HowItWorks></HowItWorks>
     </div>
   );
 };
