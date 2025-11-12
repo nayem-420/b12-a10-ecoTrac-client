@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { motion } from "framer-motion";
 import { Link } from "react-router";
 
 const Challenges = () => {
@@ -12,23 +13,55 @@ const Challenges = () => {
       .catch((error) => console.error("Error loading data:", error));
   }, []);
 
-  return (
-    <section className="my-6 py-10 bg-green-50">
-      <h2 className="text-3xl font-bold text-center mb-8 text-green-700">
-        Eco-Friendly Products
-      </h2>
+  // Animation variants
+  const cardVariants = {
+    hidden: { opacity: 0, scale: 0.9, y: 30 },
+    visible: (i) => ({
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { delay: i * 0.15, duration: 0.5, type: "spring" },
+    }),
+  };
 
-      <div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 container mx-auto px-4">
-          {products.slice(0, 3).map((product) => (
-            <div
+  return (
+    <motion.section
+      className="my-6 py-10 bg-green-50"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+    >
+      <motion.h2
+        className="text-3xl font-bold text-center mb-8 text-green-700"
+        initial={{ y: -30, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+      >
+        Eco-Friendly Products
+      </motion.h2>
+
+      <div className="container mx-auto px-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {products.slice(0, 3).map((product, i) => (
+            <motion.div
               key={product._id}
-              className="bg-white shadow-md rounded-xl overflow-hidden hover:scale-105 hover:shadow-lg transition-transform duration-300"
+              className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg cursor-pointer"
+              custom={i}
+              variants={cardVariants}
+              initial="hidden"
+              animate="visible"
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
+              }}
+              transition={{ type: "spring", stiffness: 150 }}
             >
-              <img
+              <motion.img
                 src={product.image}
                 alt={product.name}
                 className="w-full h-52 object-cover"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
               />
               <div className="p-4">
                 <h3 className="text-lg font-semibold text-gray-800">
@@ -45,16 +78,25 @@ const Challenges = () => {
                   Seller: {product.seller_name}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-        <div className="text-center mt-6">
-          <Link to={"/challenges"} className="btn btn-primary">
+
+        <motion.div
+          className="text-center mt-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+        >
+          <Link
+            to={"/challenges"}
+            className="btn btn-primary flex items-center gap-2"
+          >
             View All Challenges <FaArrowRightLong />
           </Link>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
