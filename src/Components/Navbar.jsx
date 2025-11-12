@@ -1,10 +1,29 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import logo from "../assets/ecoTrac-logo.png";
 import { NavLink } from "react-router";
 import { motion, AnimatePresence } from "framer-motion";
+import icon from "../assets/user.png";
+import { AuthContext } from "../Provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, logOut } = use(AuthContext);
+  const handleLogout = () => {
+    logOut().then(() => {
+      Swal.fire({
+        title: "LogOut Successfully",
+        icon: "success",
+        draggable: true,
+      });
+    }).catch(() => {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+    })
+  };
 
   const activeRoutes = ({ isActive }) =>
     isActive
@@ -19,7 +38,6 @@ const Navbar = () => {
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <div className="navbar-start">
-        {/* Mobile Menu Button */}
         <motion.div
           role="button"
           className="btn btn-ghost lg:hidden"
@@ -42,7 +60,6 @@ const Navbar = () => {
           </svg>
         </motion.div>
 
-        {/* Logo */}
         <motion.div
           className="btn btn-ghost"
           whileHover={{ scale: 1.05 }}
@@ -60,8 +77,6 @@ const Navbar = () => {
           </NavLink>
         </motion.div>
       </div>
-
-      {/* Desktop Menu */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <motion.li
@@ -97,26 +112,45 @@ const Navbar = () => {
         </ul>
       </div>
 
-      {/* Login Button */}
-      <div className="navbar-end">
+      <div className="navbar-end flex items-center gap-3">
+        <motion.img
+          src={icon}
+          alt="User Icon"
+          className="w-10 h-10 rounded-full"
+          initial={{ scale: 0, rotate: -180 }}
+          animate={{ scale: 1, rotate: 0 }}
+          transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+          whileHover={{ scale: 1.1, rotate: 10 }}
+        />
+
         <motion.div
           initial={{ x: 50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
-          <NavLink to={"/login"}>
+          {user ? (
             <motion.button
-              className="btn bg-green-600 hover:bg-green-700 text-white"
+              onClick={handleLogout}
+              className="btn bg-red-600 hover:bg-red-700 text-white"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Login
+              Logout
             </motion.button>
-          </NavLink>
+          ) : (
+            <NavLink to={"/login"}>
+              <motion.button
+                className="btn bg-green-600 hover:bg-green-700 text-white"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Login
+              </motion.button>
+            </NavLink>
+          )}
         </motion.div>
       </div>
 
-      {/* Mobile Dropdown Menu - Outside navbar structure */}
       <AnimatePresence>
         {isOpen && (
           <motion.div

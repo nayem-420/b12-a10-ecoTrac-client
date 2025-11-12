@@ -1,8 +1,37 @@
-import React from "react";
+import React, { use } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
+import { AuthContext } from "../Provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const Login = () => {
+  const { signIn } = use(AuthContext);
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    // console.log(email, password);
+    signIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((e) => {
+        const errorMessage = e.message;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      });
+  };
   return (
     <motion.div
       className="hero bg-gradient-to-br from-green-100 via-green-50 to-white min-h-screen"
@@ -31,7 +60,7 @@ const Login = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <div className="card-body">
+          <form onSubmit={handleLogin} className="card-body">
             <h1 className="text-4xl font-bold text-center mb-4">
               Login to <span className="text-green-600">eco</span>
               <span className="text-emerald-500">Trac</span>
@@ -45,12 +74,14 @@ const Login = () => {
             >
               <label className="label font-semibold">Email</label>
               <input
+                name="email"
                 type="email"
                 className="input input-bordered w-full"
                 placeholder="Enter your email"
               />
               <label className="label font-semibold">Password</label>
               <input
+                name="password"
                 type="password"
                 className="input input-bordered w-full"
                 placeholder="Enter your password"
@@ -75,6 +106,7 @@ const Login = () => {
               </div>
 
               <motion.button
+                type="submit"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 200 }}
@@ -84,14 +116,12 @@ const Login = () => {
               </motion.button>
             </motion.fieldset>
 
-            
             <div className="flex items-center justify-center my-4">
               <div className="flex-grow border-t border-gray-300"></div>
               <span className="px-3 text-gray-500 font-semibold">OR</span>
               <div className="flex-grow border-t border-gray-300"></div>
             </div>
 
-            
             <button className="btn bg-white text-black border-gray-300 hover:bg-gray-50 w-full">
               <svg
                 aria-label="Google logo"
@@ -122,11 +152,9 @@ const Login = () => {
               </svg>
               Login with Google
             </button>
-          </div>
+          </form>
         </motion.div>
       </div>
-
-      
 
       <motion.div
         className="absolute bottom-10 right-10 text-green-200 text-5xl opacity-30"

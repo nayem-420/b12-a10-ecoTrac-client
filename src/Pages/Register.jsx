@@ -1,8 +1,44 @@
-import React from "react";
+import React, { use } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
+import { AuthContext } from "../Provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const Register = () => {
+  const { createUser, setUser } = use(AuthContext);
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const photo = form.photo.value;
+    const password = form.password.value;
+
+    console.log(name, email, photo, password);
+
+    createUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        // console.log(user);
+        setUser(user);
+      })
+      .catch((e) => {
+        const errorMessage = e.message;
+        Swal.fire({
+          icon: "error",
+          title: { errorMessage },
+          text: "Something went wrong!",
+          footer: '<a href="#">Why do I have this issue?</a>',
+        });
+      });
+  };
   return (
     <motion.div
       className="hero bg-gradient-to-br from-green-100 via-green-50 to-white min-h-screen"
@@ -11,7 +47,6 @@ const Register = () => {
       transition={{ duration: 0.8 }}
     >
       <div className="hero-content flex-col lg:flex-row-reverse">
-        
         <motion.div
           className="text-center lg:text-left"
           initial={{ x: 100, opacity: 0 }}
@@ -27,44 +62,50 @@ const Register = () => {
           </p>
         </motion.div>
 
-        
         <motion.div
           className="card bg-white/90 backdrop-blur-md w-full max-w-sm shadow-2xl border border-green-100"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <div className="card-body">
+          <form onSubmit={handleRegister} className="card-body">
             <h2 className="text-center text-3xl font-bold mb-4">
               Create Account
             </h2>
             <fieldset className="fieldset space-y-3">
               <label className="label font-semibold">Name</label>
               <input
+                name="name"
                 type="text"
                 className="input input-bordered w-full"
                 placeholder="Your name"
+                required
               />
 
               <label className="label font-semibold">Email</label>
               <input
+                name="email"
                 type="email"
                 className="input input-bordered w-full"
                 placeholder="Email"
+                required
+              />
+
+              <label className="label font-semibold">Photo Url</label>
+              <input
+                name="photo"
+                type="text"
+                className="input input-bordered w-full"
+                placeholder="Photo URL"
               />
 
               <label className="label font-semibold">Password</label>
               <input
+                name="password"
                 type="password"
                 className="input input-bordered w-full"
                 placeholder="Password"
-              />
-
-              <label className="label font-semibold">Confirm Password</label>
-              <input
-                type="password"
-                className="input input-bordered w-full"
-                placeholder="Confirm password"
+                required
               />
 
               <div className="text-sm text-center mt-2">
@@ -80,6 +121,7 @@ const Register = () => {
               </div>
 
               <motion.button
+                type="submit"
                 className="btn bg-green-600 hover:bg-green-700 text-white mt-6 w-full"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -88,14 +130,12 @@ const Register = () => {
               </motion.button>
             </fieldset>
 
-            
             <div className="flex items-center justify-center my-4">
               <div className="flex-grow border-t border-gray-300"></div>
               <span className="px-3 text-gray-500 font-semibold">OR</span>
               <div className="flex-grow border-t border-gray-300"></div>
             </div>
 
-            
             <button className="btn bg-white text-black border-gray-300 hover:bg-gray-50 w-full">
               <svg
                 aria-label="Google logo"
@@ -126,18 +166,11 @@ const Register = () => {
               </svg>
               Register with Google
             </button>
-          </div>
+          </form>
         </motion.div>
       </div>
 
       
-      <motion.div
-        className="absolute top-10 left-10 text-green-300 text-6xl opacity-30"
-        animate={{ y: [0, -15, 0] }}
-        transition={{ duration: 5, repeat: Infinity }}
-      >
-        🍃
-      </motion.div>
 
       <motion.div
         className="absolute bottom-10 right-10 text-green-200 text-5xl opacity-30"
