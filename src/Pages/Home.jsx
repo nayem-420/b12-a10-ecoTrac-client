@@ -3,6 +3,7 @@ import Banner from "./Banner";
 import ChallengeCard from "../Layouts/ChallengeCard";
 import Challenges from "./Challenges";
 import Loading from "../Layouts/Loading";
+import WhyGoGreen from "./WhyGoGreen";
 
 const Home = () => {
   return (
@@ -25,6 +26,7 @@ const Home = () => {
       <Suspense fallback={<Loading></Loading>}>
         <Challenges></Challenges>
       </Suspense>
+      <WhyGoGreen></WhyGoGreen>
     </div>
   );
 };

@@ -5,6 +5,8 @@ import MyActivities from "../Pages/MyActivities";
 import Home from "../Pages/Home";
 import AllChallenges from "../Pages/AllChallenge";
 import NotFound from "../Components/NotFound";
+import Login from "../Pages/Login";
+import Register from "../Pages/Register";
 
 export const router = createBrowserRouter([
   {
@@ -23,11 +25,15 @@ export const router = createBrowserRouter([
         path: "/my-activities",
         element: <MyActivities></MyActivities>,
       },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/register",
+        element: <Register></Register>,
+      },
     ],
-  },
-  {
-    path: "/auth",
-    element: <div>auth layouts</div>,
   },
   {
     path: "/*",
