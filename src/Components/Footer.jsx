@@ -50,9 +50,9 @@ const Footer = () => {
         <p>
           Copyright © {new Date().getFullYear()} - We value your privacy and
           ensure an accessible experience for all users.{" "}
-          <p className="text-xl font-bold">
+          <span className="text-xl font-bold">
             eco<span className="text-blue-500">Trac</span>
-          </p>
+          </span>
         </p>
       </aside>
     </footer>

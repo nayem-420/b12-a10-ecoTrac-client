@@ -1,65 +1,57 @@
-import React from 'react';
+import React from "react";
+
+const activeChallenges = [
+  {
+    title: "Plastic-Free July",
+    category: "Waste Reduction",
+    metric: "Reduce 5 kg plastic",
+    image: "/src/assets/plastic-free.png",
+  },
+  {
+    title: "Save Energy Week",
+    category: "Energy Conservation",
+    metric: "Reduce 50 kWh",
+    image: "",
+  },
+  {
+    title: "Water Saver Challenge",
+    category: "Water Conservation",
+    metric: "Save 1000 liters",
+    image: "/src/assets/water-saver.jpg",
+  },
+  {
+    title: "Plant 10 Trees",
+    category: "Green Living",
+    metric: "10 trees planted",
+    image: "/src/assets/plant-trees.jpg",
+  },
+];
 
 const ChallengeCard = () => {
-    return (
-      <section className="bg-green-50 py-8">
-        // {/* Carousel */}
-        //{" "}
-        <Carousel showThumbs={false} autoPlay infiniteLoop>
-          //{" "}
-          <div>
-            // <img src="/images/plastic-free.jpg" alt="Plastic Free July" />
-            //{" "}
-            <div className="legend bg-opacity-70">
-              // <h2 className="text-2xl font-bold">Plastic-Free July</h2>
-              // <p>Avoid single-use plastic for one month</p>
-              //{" "}
-              <button className="btn btn-success mt-2">View Challenge</button>
-              //{" "}
+  return (
+    <section className="py-10 bg-green-50">
+      <h2 className="text-3xl font-bold text-center mb-8">Active Challenges</h2>
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 container mx-auto px-4">
+        {activeChallenges.map((challenge, idx) => (
+          <div
+            key={idx}
+            className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-transform"
+          >
+            <img
+              src={challenge.image}
+              alt={challenge.title}
+              className="w-full h-48 object-cover"
+            />
+            <div className="p-4">
+              <h3 className="text-xl font-semibold">{challenge.title}</h3>
+              <p className="text-sm text-green-700">{challenge.category}</p>
+              <p className="mt-2 text-gray-600">{challenge.metric}</p>
             </div>
-            //{" "}
           </div>
-          //{" "}
-          <div>
-            // <img src="/images/save-energy.jpg" alt="Energy Saver" />
-            //{" "}
-            <div className="legend bg-opacity-70">
-              // <h2 className="text-2xl font-bold">Save Energy Week</h2>
-              // <p>Reduce electricity usage by 10%</p>
-              //{" "}
-              <button className="btn btn-success mt-2">View Challenge</button>
-              //{" "}
-            </div>
-            //{" "}
-          </div>
-          //{" "}
-        </Carousel>
-        // {/* Live Stats */}
-        //{" "}
-        <div className="grid grid-cols-3 text-center mt-6">
-          //{" "}
-          <div>
-            // <h3 className="text-3xl font-bold text-green-700">12,500 kg</h3>
-            // <p>CO₂ Saved</p>
-            //{" "}
-          </div>
-          //{" "}
-          <div>
-            // <h3 className="text-3xl font-bold text-green-700">3,200 kg</h3>
-            // <p>Plastic Reduced</p>
-            //{" "}
-          </div>
-          //{" "}
-          <div>
-            // <h3 className="text-3xl font-bold text-green-700">1,245+</h3>
-            // <p>Active Members</p>
-            //{" "}
-          </div>
-          //{" "}
-        </div>
-        //{" "}
-      </section>
-    );
+        ))}
+      </div>
+    </section>
+  );
 };
 
 export default ChallengeCard;

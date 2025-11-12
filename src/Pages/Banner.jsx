@@ -4,6 +4,7 @@ import "swiper/css";
 import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { Link } from "react-router";
 
 const slides = [
   {
@@ -44,9 +45,9 @@ const Banner = () => {
                 {slide.title}
               </h2>
               <p className="text-lg md:text-xl">{slide.subtitle}</p>
-              <button className="flex items-center justify-center gap-2 mt-4 bg-green-500 hover:bg-green-600 px-5 py-2 rounded-lg text-white font-semibold">
+              <Link to={'/challenges'} className="flex items-center justify-center gap-2 mt-4 bg-green-500 hover:bg-green-600 px-5 py-2 rounded-lg text-white font-semibold">
                 View Challenge <FaArrowRightLong />
-              </button>
+              </Link>
             </div>
           </SwiperSlide>
         ))}

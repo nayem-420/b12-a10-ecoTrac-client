@@ -3,6 +3,7 @@ import MainLayOuts from "../Layouts/MainLayOuts";
 import Challenges from "../Pages/Challenges";
 import MyActivities from "../Pages/MyActivities";
 import Home from "../Pages/Home";
+import AllChallenges from "../Pages/AllChallenge";
 
 export const router = createBrowserRouter([
   {
@@ -15,7 +16,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/challenges",
-        element: <Challenges></Challenges>,
+        element: <AllChallenges></AllChallenges>,
       },
       {
         path: "/my-activities",
