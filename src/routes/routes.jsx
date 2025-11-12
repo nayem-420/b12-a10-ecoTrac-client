@@ -4,6 +4,7 @@ import Challenges from "../Pages/Challenges";
 import MyActivities from "../Pages/MyActivities";
 import Home from "../Pages/Home";
 import AllChallenges from "../Pages/AllChallenge";
+import NotFound from "../Components/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,6 @@ export const router = createBrowserRouter([
   },
   {
     path: "/*",
-    element: <div>404 Not found</div>,
+    element: <NotFound></NotFound>,
   },
 ]);

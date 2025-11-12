@@ -4,9 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 const Loading = () => {
   const [isVisible, setIsVisible] = useState(true);
 
-  // Auto-hide after 2.5s (you can adjust time)
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(false), 3500);
+    const timer = setTimeout(() => setIsVisible(false), 2500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -19,7 +18,6 @@ const Loading = () => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8 }}
         >
-          {/* EcoTrac Logo Circle Animation */}
           <motion.div
             className="w-24 h-24 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md"
             initial={{ scale: 0 }}
@@ -36,7 +34,6 @@ const Loading = () => {
             />
           </motion.div>
 
-          {/* Animated Text */}
           <motion.h1
             className="text-3xl font-bold mt-6 tracking-wide"
             initial={{ y: 20, opacity: 0 }}
@@ -46,7 +43,6 @@ const Loading = () => {
             Eco-Trac
           </motion.h1>
 
-          {/* Loading Bar */}
           <motion.div
             className="mt-6 w-40 h-2 bg-white/30 rounded-full overflow-hidden"
             initial={{ opacity: 0 }}
@@ -61,7 +57,6 @@ const Loading = () => {
             />
           </motion.div>
 
-          {/* Tagline */}
           <motion.p
             className="text-sm mt-4 text-white/90"
             initial={{ opacity: 0 }}

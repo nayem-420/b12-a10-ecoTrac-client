@@ -45,8 +45,8 @@ const Banner = () => {
                 {slide.title}
               </h2>
               <p className="text-lg md:text-xl">{slide.subtitle}</p>
-              <Link to={'/challenges'} className="flex items-center justify-center gap-2 mt-4 bg-green-500 hover:bg-green-600 px-5 py-2 rounded-lg text-white font-semibold">
-                View Challenge <FaArrowRightLong />
+              <Link to={'/login'} className="flex items-center justify-center gap-2 mt-4 bg-green-500 hover:bg-green-600 px-5 py-2 rounded-lg text-white font-semibold">
+                Get Started <FaArrowRightLong />
               </Link>
             </div>
           </SwiperSlide>
