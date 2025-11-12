@@ -13,7 +13,7 @@ const Challenges = () => {
       .catch((error) => console.error("Error loading data:", error));
   }, []);
 
-  // Animation variants
+  
   const cardVariants = {
     hidden: { opacity: 0, scale: 0.9, y: 30 },
     visible: (i) => ({

@@ -6,6 +6,7 @@ import Loading from "../Layouts/Loading";
 import WhyGoGreen from "./WhyGoGreen";
 import HowItWorks from "./HowItWorks";
 import LiveStatistics from "./LiveStatistics";
+import UpcomingEvents from "./UpcommingEvents";
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
       </Suspense>
       <WhyGoGreen></WhyGoGreen>
       <HowItWorks></HowItWorks>
+      <UpcomingEvents></UpcomingEvents>
     </div>
   );
 };

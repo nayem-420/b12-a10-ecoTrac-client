@@ -62,13 +62,7 @@ const WhyGoGreen = () => {
         🍃
       </motion.div>
 
-      <motion.div
-        className="absolute right-10 top-10 text-green-300 text-5xl opacity-20"
-        animate={{ y: [0, 25, 0] }}
-        transition={{ duration: 5, repeat: Infinity }}
-      >
-        🌿
-      </motion.div>
+      
     </section>
   );
 };

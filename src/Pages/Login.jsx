@@ -84,14 +84,14 @@ const Login = () => {
               </motion.button>
             </motion.fieldset>
 
-            {/* OR Divider */}
+            
             <div className="flex items-center justify-center my-4">
               <div className="flex-grow border-t border-gray-300"></div>
               <span className="px-3 text-gray-500 font-semibold">OR</span>
               <div className="flex-grow border-t border-gray-300"></div>
             </div>
 
-            {/* Google Login Button */}
+            
             <button className="btn bg-white text-black border-gray-300 hover:bg-gray-50 w-full">
               <svg
                 aria-label="Google logo"
@@ -126,13 +126,7 @@ const Login = () => {
         </motion.div>
       </div>
 
-      <motion.div
-        className="absolute top-10 left-10 text-green-300 text-6xl opacity-30"
-        animate={{ y: [0, -15, 0] }}
-        transition={{ duration: 5, repeat: Infinity }}
-      >
-        🍃
-      </motion.div>
+      
 
       <motion.div
         className="absolute bottom-10 right-10 text-green-200 text-5xl opacity-30"

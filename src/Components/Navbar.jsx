@@ -1,84 +1,176 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../assets/ecoTrac-logo.png";
 import { NavLink } from "react-router";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   const activeRoutes = ({ isActive }) =>
     isActive
       ? "bg-gradient-to-r from-green-500 via-emerald-400 to-teal-400 text-white font-semibold rounded-md px-3 py-1 shadow-md transition-all duration-300"
       : "text-gray-700 hover:text-green-600 hover:bg-gradient-to-r hover:from-green-100 hover:to-teal-100 rounded-md px-3 py-1 transition-all duration-300";
+
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <motion.nav
+      className="navbar bg-base-100 shadow-sm"
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
       <div className="navbar-start">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              {" "}
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />{" "}
-            </svg>
-          </div>
-          <ul
-            tabIndex="-1"
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+        {/* Mobile Menu Button */}
+        <motion.div
+          role="button"
+          className="btn btn-ghost lg:hidden"
+          onClick={() => setIsOpen(!isOpen)}
+          whileTap={{ scale: 0.9 }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
           >
-            <li>
-              <NavLink className={activeRoutes} to={"/"}>
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink className={activeRoutes} to={"/challenges"}>
-                Challenges
-              </NavLink>
-            </li>
-            <li>
-              <NavLink className={activeRoutes} to={"/my-activities"}>
-                MyActivities
-              </NavLink>
-            </li>
-          </ul>
-        </div>
-        <div className="btn btn-ghost">
-          <img src={logo} className="w-8 rounded-full" alt="" />
-          <NavLink to={'/'} className="text-xl font-bold">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 6h16M4 12h8m-8 6h16"
+            />
+          </svg>
+        </motion.div>
+
+        {/* Logo */}
+        <motion.div
+          className="btn btn-ghost"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <motion.img
+            src={logo}
+            className="w-8 rounded-full"
+            alt="EcoTrac Logo"
+            animate={{ rotate: [0, 360] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          />
+          <NavLink to={"/"} className="text-xl font-bold">
             eco<span className="text-blue-500">Trac</span>
           </NavLink>
-        </div>
+        </motion.div>
       </div>
+
+      {/* Desktop Menu */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          <li>
+          <motion.li
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            whileHover={{ scale: 1.1 }}
+          >
             <NavLink className={activeRoutes} to={"/"}>
               Home
             </NavLink>
-          </li>
-          <li>
+          </motion.li>
+          <motion.li
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            whileHover={{ scale: 1.1 }}
+          >
             <NavLink className={activeRoutes} to={"/challenges"}>
               Challenges
             </NavLink>
-          </li>
-          <li>
+          </motion.li>
+          <motion.li
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+            whileHover={{ scale: 1.1 }}
+          >
             <NavLink className={activeRoutes} to={"/my-activities"}>
               MyActivities
             </NavLink>
-          </li>
+          </motion.li>
         </ul>
       </div>
+
+      {/* Login Button */}
       <div className="navbar-end">
-        <NavLink to={"/login"} className="btn">Login</NavLink>
+        <motion.div
+          initial={{ x: 50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+        >
+          <NavLink to={"/login"}>
+            <motion.button
+              className="btn bg-green-600 hover:bg-green-700 text-white"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Login
+            </motion.button>
+          </NavLink>
+        </motion.div>
       </div>
-    </div>
+
+      {/* Mobile Dropdown Menu - Outside navbar structure */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="absolute top-16 left-0 w-full lg:hidden z-50"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <ul className="menu bg-base-100 rounded-box w-full p-4 shadow-lg">
+              <motion.li
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.1 }}
+              >
+                <NavLink
+                  className={activeRoutes}
+                  to={"/"}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Home
+                </NavLink>
+              </motion.li>
+              <motion.li
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
+                <NavLink
+                  className={activeRoutes}
+                  to={"/challenges"}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Challenges
+                </NavLink>
+              </motion.li>
+              <motion.li
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                <NavLink
+                  className={activeRoutes}
+                  to={"/my-activities"}
+                  onClick={() => setIsOpen(false)}
+                >
+                  MyActivities
+                </NavLink>
+              </motion.li>
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.nav>
   );
 };
 
