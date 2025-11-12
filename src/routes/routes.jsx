@@ -1,47 +1,76 @@
 import { createBrowserRouter } from "react-router";
 import MainLayOuts from "../Layouts/MainLayOuts";
-import Challenges from "../Pages/Challenges";
-import MyActivities from "../Pages/MyActivities";
 import Home from "../Pages/Home";
-import AllChallenges from "../Pages/AllChallenge";
-import NotFound from "../Components/NotFound";
+import AllChallenges from "../Pages/AllChallenges";
+import ChallengeDetail from "../Pages/ChallengeDetail";
+import JoinChallenge from "../Pages/JoinChallenge";
+import MyActivities from "../Pages/MyActivities";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import ForgetPassword from "../Pages/ForgetPassword";
+import NotFound from "../Components/NotFound";
+import PrivateRoute from "../Components/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayOuts></MainLayOuts>,
+    element: <MainLayOuts />,
     children: [
       {
         index: true,
-        element: <Home></Home>,
+        element: <Home />,
       },
+      // Public Routes
       {
         path: "/challenges",
-        element: <AllChallenges></AllChallenges>,
+        element: <AllChallenges />, // Browse all challenges
       },
       {
-        path: "/my-activities",
-        element: <MyActivities></MyActivities>,
+        path: "/challenges/:id",
+        element: <ChallengeDetail />, // Challenge detail (public)
       },
       {
         path: "/login",
-        element: <Login></Login>,
+        element: <Login />,
       },
       {
         path: "/register",
-        element: <Register></Register>,
+        element: <Register />,
       },
       {
         path: "/forget-password",
-        element: <ForgetPassword></ForgetPassword>,
+        element: <ForgetPassword />,
+      },
+
+      // Protected Routes
+      {
+        path: "/challenges/add",
+        element: (
+          <PrivateRoute>
+            <AddChallenge />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/challenges/join/:id",
+        element: (
+          <PrivateRoute>
+            <JoinChallenge />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/my-activities",
+        element: (
+          <PrivateRoute>
+            <MyActivities />
+          </PrivateRoute>
+        ),
       },
     ],
   },
   {
-    path: "/*",
-    element: <NotFound></NotFound>,
+    path: "*",
+    element: <NotFound />,
   },
 ]);

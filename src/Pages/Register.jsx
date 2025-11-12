@@ -1,11 +1,30 @@
-import React, { use } from "react";
+import React, { useState, useContext } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import { FaEye } from "react-icons/fa6";
+import { LuEyeClosed } from "react-icons/lu";
 
 const Register = () => {
-  const { createUser, setUser } = use(AuthContext);
+  const { createUser, setUser } = useContext(AuthContext);
+  const [passwordError, setPasswordError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+
+  const validatePassword = (password) => {
+    if (password.length < 6)
+      return "Password must be at least 6 characters long.";
+    if (!/[A-Z]/.test(password))
+      return "Password must contain at least one uppercase letter.";
+    if (!/[a-z]/.test(password))
+      return "Password must contain at least one lowercase letter.";
+    if (!/[!@#$%^&*(),.?\":{}|<>]/.test(password))
+      return "Password must contain at least one special character.";
+    return "";
+  };
+
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -14,31 +33,37 @@ const Register = () => {
     const photo = form.photo.value;
     const password = form.password.value;
 
-    console.log(name, email, photo, password);
+    const errorMsg = validatePassword(password);
+    if (errorMsg) {
+      setPasswordError(errorMsg);
+      return;
+    }
+    setPasswordError("");
+    setLoading(true);
 
     createUser(email, password)
       .then((result) => {
         const user = result.user;
+        setUser(user);
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Your work has been saved",
+          title: "Registration Successful!",
           showConfirmButton: false,
           timer: 1500,
         });
-        // console.log(user);
-        setUser(user);
+        navigate("/");
       })
       .catch((e) => {
-        const errorMessage = e.message;
         Swal.fire({
           icon: "error",
-          title: { errorMessage },
-          text: "Something went wrong!",
-          footer: '<a href="#">Why do I have this issue?</a>',
+          title: "Error",
+          text: e.message,
         });
-      });
+      })
+      .finally(() => setLoading(false));
   };
+
   return (
     <motion.div
       className="hero bg-gradient-to-br from-green-100 via-green-50 to-white min-h-screen"
@@ -47,6 +72,7 @@ const Register = () => {
       transition={{ duration: 0.8 }}
     >
       <div className="hero-content flex-col lg:flex-row-reverse">
+        
         <motion.div
           className="text-center lg:text-left"
           initial={{ x: 100, opacity: 0 }}
@@ -54,7 +80,7 @@ const Register = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <h1 className="text-5xl font-bold text-green-700">
-            Register Now to eco<span className="text-blue-500">Trac</span>!
+            Join <span className="text-blue-500">EcoTrack</span>!
           </h1>
           <p className="py-6 text-gray-600">
             Join our green community and start tracking your eco-friendly
@@ -62,6 +88,7 @@ const Register = () => {
           </p>
         </motion.div>
 
+        
         <motion.div
           className="card bg-white/90 backdrop-blur-md w-full max-w-sm shadow-2xl border border-green-100"
           initial={{ scale: 0.8, opacity: 0 }}
@@ -72,6 +99,7 @@ const Register = () => {
             <h2 className="text-center text-3xl font-bold mb-4">
               Create Account
             </h2>
+
             <fieldset className="fieldset space-y-3">
               <label className="label font-semibold">Name</label>
               <input
@@ -100,13 +128,28 @@ const Register = () => {
               />
 
               <label className="label font-semibold">Password</label>
-              <input
-                name="password"
-                type="password"
-                className="input input-bordered w-full"
-                placeholder="Password"
-                required
-              />
+              <div className="relative">
+                <input
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  className={`input input-bordered w-full pr-10 ${
+                    passwordError ? "border-red-500" : ""
+                  }`}
+                  placeholder="Password"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-3 text-gray-500 hover:text-green-600"
+                >
+                  {showPassword ? <LuEyeClosed size={20} /> : <FaEye size={20} />}
+                </button>
+              </div>
+
+              {passwordError && (
+                <p className="text-red-500 text-sm mt-1">{passwordError}</p>
+              )}
 
               <div className="text-sm text-center mt-2">
                 <p>
@@ -122,14 +165,18 @@ const Register = () => {
 
               <motion.button
                 type="submit"
-                className="btn bg-green-600 hover:bg-green-700 text-white mt-6 w-full"
-                whileHover={{ scale: 1.05 }}
+                disabled={loading}
+                className={`btn bg-green-600 hover:bg-green-700 text-white mt-6 w-full ${
+                  loading ? "opacity-60 cursor-not-allowed" : ""
+                }`}
+                whileHover={{ scale: loading ? 1 : 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Register
+                {loading ? "Registering..." : "Register"}
               </motion.button>
             </fieldset>
 
+            
             <div className="flex items-center justify-center my-4">
               <div className="flex-grow border-t border-gray-300"></div>
               <span className="px-3 text-gray-500 font-semibold">OR</span>
@@ -169,8 +216,6 @@ const Register = () => {
           </form>
         </motion.div>
       </div>
-
-      
 
       <motion.div
         className="absolute bottom-10 right-10 text-green-200 text-5xl opacity-30"

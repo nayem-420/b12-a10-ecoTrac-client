@@ -17,10 +17,10 @@ const Home = () => {
       <Suspense fallback={<Loading></Loading>}>
         <Challenges></Challenges>
       </Suspense>
-      <WhyGoGreen></WhyGoGreen>
-      <HowItWorks></HowItWorks>
       <RecentTips></RecentTips>
       <UpcomingEvents></UpcomingEvents>
+      <WhyGoGreen></WhyGoGreen>
+      <HowItWorks></HowItWorks>
     </div>
   );
 };
