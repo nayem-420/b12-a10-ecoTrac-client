@@ -7,6 +7,7 @@ import WhyGoGreen from "./WhyGoGreen";
 import HowItWorks from "./HowItWorks";
 import LiveStatistics from "./LiveStatistics";
 import UpcomingEvents from "./UpcommingEvents";
+import RecentTips from "./RecentTips";
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
       </Suspense>
       <WhyGoGreen></WhyGoGreen>
       <HowItWorks></HowItWorks>
+      <RecentTips></RecentTips>
       <UpcomingEvents></UpcomingEvents>
     </div>
   );
