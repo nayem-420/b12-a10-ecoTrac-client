@@ -11,23 +11,20 @@ const Login = () => {
       transition={{ duration: 0.8 }}
     >
       <div className="hero-content flex-col lg:flex-row-reverse">
-        {/* Left side intro text */}
         <motion.div
           className="text-center lg:text-left"
           initial={{ x: 50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.6 }}
         >
-          <h1 className="text-5xl font-bold text-green-700">
-            Welcome Back 🌿
-          </h1>
+          <h1 className="text-5xl font-bold text-green-700">Welcome Back 🌿</h1>
           <p className="py-4 text-gray-600 max-w-sm">
             Log in to continue your eco journey and track your sustainable
-            impact with <span className="text-green-600 font-semibold">ecoTrac</span>.
+            impact with{" "}
+            <span className="text-green-600 font-semibold">ecoTrac</span>.
           </p>
         </motion.div>
 
-        {/* Card */}
         <motion.div
           className="card bg-white/90 backdrop-blur-md w-full max-w-sm shadow-2xl border border-green-100"
           initial={{ y: 80, opacity: 0 }}
@@ -49,20 +46,23 @@ const Login = () => {
               <label className="label font-semibold">Email</label>
               <input
                 type="email"
-                className="input input-bordered"
+                className="input input-bordered w-full"
                 placeholder="Enter your email"
               />
               <label className="label font-semibold">Password</label>
               <input
                 type="password"
-                className="input input-bordered"
+                className="input input-bordered w-full"
                 placeholder="Enter your password"
               />
 
               <div className="flex justify-between text-sm mt-2">
-                <a className="link link-hover text-green-700">
+                <Link
+                  to={"/forget-password"}
+                  className="link link-hover text-green-700"
+                >
                   Forgot password?
-                </a>
+                </Link>
                 <p>
                   New here?{" "}
                   <Link
@@ -83,11 +83,49 @@ const Login = () => {
                 Login
               </motion.button>
             </motion.fieldset>
+
+            {/* OR Divider */}
+            <div className="flex items-center justify-center my-4">
+              <div className="flex-grow border-t border-gray-300"></div>
+              <span className="px-3 text-gray-500 font-semibold">OR</span>
+              <div className="flex-grow border-t border-gray-300"></div>
+            </div>
+
+            {/* Google Login Button */}
+            <button className="btn bg-white text-black border-gray-300 hover:bg-gray-50 w-full">
+              <svg
+                aria-label="Google logo"
+                width="16"
+                height="16"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <g>
+                  <path d="m0 0H512V512H0" fill="#fff"></path>
+                  <path
+                    fill="#34a853"
+                    d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"
+                  ></path>
+                  <path
+                    fill="#4285f4"
+                    d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"
+                  ></path>
+                  <path
+                    fill="#fbbc02"
+                    d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"
+                  ></path>
+                  <path
+                    fill="#ea4335"
+                    d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"
+                  ></path>
+                </g>
+              </svg>
+              Login with Google
+            </button>
           </div>
         </motion.div>
       </div>
 
-      {/* floating eco icons */}
       <motion.div
         className="absolute top-10 left-10 text-green-300 text-6xl opacity-30"
         animate={{ y: [0, -15, 0] }}
