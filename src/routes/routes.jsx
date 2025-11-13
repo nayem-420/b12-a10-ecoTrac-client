@@ -22,17 +22,15 @@ export const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
-      // Public Routes
       {
         path: "/challenges",
         element: <Challenges />,
-        children: [
-          {
-            path: "/challenges",
-            element: <AllChallenges />,
-          },
-        ],
       },
+      {
+        path: "/all-challenges",
+        element: <AllChallenges />,
+      },
+
       {
         path: "/challenges/:id",
         element: <ChallengeDetail />,
@@ -50,7 +48,6 @@ export const router = createBrowserRouter([
         element: <ForgetPassword />,
       },
 
-      // Protected Routes
       {
         path: "/challenges/add",
         element: (

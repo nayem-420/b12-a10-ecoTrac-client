@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { motion } from "framer-motion";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const Challenges = () => {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("/fakeData01.json")
@@ -13,7 +14,25 @@ const Challenges = () => {
       .catch((error) => console.error("Error loading data:", error));
   }, []);
 
-  
+  const handleCardClick = (productId) => {
+    // Save to localStorage as joined challenge
+    const joinedChallenges = JSON.parse(
+      localStorage.getItem("joinedChallenges") || "[]"
+    );
+
+    // Check if already joined
+    if (!joinedChallenges.includes(productId)) {
+      joinedChallenges.push(productId);
+      localStorage.setItem(
+        "joinedChallenges",
+        JSON.stringify(joinedChallenges)
+      );
+    }
+
+    // Navigate to activity detail
+    navigate(`/my-activities/${productId}`);
+  };
+
   const cardVariants = {
     hidden: { opacity: 0, scale: 0.9, y: 30 },
     visible: (i) => ({
@@ -37,12 +56,12 @@ const Challenges = () => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6 }}
       >
-        Eco-Friendly Products
+        Eco-Friendly Challenges
       </motion.h2>
 
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product, i) => (
+          {products.slice(0, 3).map((product, i) => (
             <motion.div
               key={product._id}
               className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg cursor-pointer"
@@ -55,6 +74,7 @@ const Challenges = () => {
                 boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
               }}
               transition={{ type: "spring", stiffness: 150 }}
+              onClick={() => handleCardClick(product._id)}
             >
               <motion.img
                 src={product.image}
@@ -70,13 +90,27 @@ const Challenges = () => {
                 <p className="text-green-700 text-sm mb-1">
                   {product.category}
                 </p>
-                <p className="text-gray-600 text-sm">{product.description}</p>
+                <p className="text-gray-600 text-sm line-clamp-2">
+                  {product.description}
+                </p>
                 <p className="font-semibold mt-2 text-green-800">
                   $ {product.price}
                 </p>
                 <p className="text-xs text-gray-400 mt-1">
                   Seller: {product.seller_name}
                 </p>
+
+                <motion.button
+                  className="btn btn-sm bg-green-600 hover:bg-green-700 text-white w-full mt-3"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCardClick(product._id);
+                  }}
+                >
+                  Join Challenge →
+                </motion.button>
               </div>
             </motion.div>
           ))}
@@ -88,11 +122,14 @@ const Challenges = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 }}
         >
-          <Link
-            to={"/challenges"}
-            className="btn btn-primary flex items-center gap-2"
-          >
-            View All Challenges <FaArrowRightLong />
+          <Link to={"/all-challenges"}>
+            <motion.button
+              className="btn bg-green-600 hover:bg-green-700 text-white flex items-center gap-2 mx-auto"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              View All Challenges <FaArrowRightLong />
+            </motion.button>
           </Link>
         </motion.div>
       </div>

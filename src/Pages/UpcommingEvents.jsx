@@ -80,7 +80,7 @@ const UpcomingEvents = () => {
   return (
     <section className="py-16 bg-gradient-to-b from-white to-green-50">
       <div className="container mx-auto px-4">
-        {/* Section Header */}
+        
         <motion.div
           className="text-center mb-12"
           initial={{ y: -50, opacity: 0 }}
@@ -100,7 +100,7 @@ const UpcomingEvents = () => {
           </p>
         </motion.div>
 
-        {/* Events Grid */}
+        
         <motion.div
           ref={ref}
           className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
@@ -116,7 +116,7 @@ const UpcomingEvents = () => {
               whileHover={{ y: -10, scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
             >
-              {/* Event Image */}
+              
               <motion.div
                 className="relative h-48 overflow-hidden"
                 whileHover={{ scale: 1.1 }}
@@ -137,7 +137,7 @@ const UpcomingEvents = () => {
                 </motion.div>
               </motion.div>
 
-              {/* Event Details */}
+              
               <div className="p-5">
                 <motion.h3
                   className="text-xl font-bold text-gray-800 mb-3 line-clamp-2"

@@ -8,17 +8,29 @@ const MyActivities = () => {
   const [joinedChallenges, setJoinedChallenges] = useState([]);
 
   useEffect(() => {
-    // Fetch user's joined challenges from localStorage/database
-    // For demo, fetching all and marking some as joined
+    // Get joined challenge IDs from localStorage
+    const joinedIds = JSON.parse(
+      localStorage.getItem("joinedChallenges") || "[]"
+    );
+
+    // Fetch all challenges
     fetch("/fakeData01.json")
       .then((res) => res.json())
       .then((data) => {
-        // Simulate joined challenges with progress
-        const joined = data.slice(0, 4).map((challenge) => ({
-          ...challenge,
-          progress: Math.floor(Math.random() * 100),
-          joinedDate: new Date().toLocaleDateString(),
-        }));
+        // Filter only joined challenges
+        const joined = data
+          .filter((challenge) => joinedIds.includes(challenge._id))
+          .map((challenge) => {
+            // Get saved progress from localStorage
+            const savedProgress = JSON.parse(
+              localStorage.getItem(`progress_${challenge._id}`) || "0"
+            );
+            return {
+              ...challenge,
+              progress: savedProgress,
+              joinedDate: new Date().toLocaleDateString(),
+            };
+          });
         setJoinedChallenges(joined);
       })
       .catch((error) => console.error("Error loading data:", error));

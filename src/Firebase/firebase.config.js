@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCnQL5AmWrjbjX21GOzsxe-BcIhKag8rZ0",
-  authDomain: "ecotrac-client-auth.firebaseapp.com",
-  projectId: "ecotrac-client-auth",
-  storageBucket: "ecotrac-client-auth.firebasestorage.app",
-  messagingSenderId: "380959500753",
-  appId: "1:380959500753:web:926e29907a176fcfd498f0",
+  apiKey: import.meta.env.VITE_apiKey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId,
 };
 
 // Initialize Firebase

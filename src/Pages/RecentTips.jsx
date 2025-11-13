@@ -105,7 +105,6 @@ const RecentTips = () => {
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
-        {/* Section Header */}
         <motion.div
           className="text-center mb-12"
           initial={{ y: -50, opacity: 0 }}
@@ -128,7 +127,6 @@ const RecentTips = () => {
           </p>
         </motion.div>
 
-        {/* Tips List */}
         <motion.div
           ref={ref}
           className="max-w-4xl mx-auto space-y-5"
@@ -144,7 +142,6 @@ const RecentTips = () => {
               whileHover={{ scale: 1.02, x: 10 }}
             >
               <div className="flex flex-col md:flex-row gap-4">
-                {/* Left: Avatar & Upvote */}
                 <div className="flex md:flex-col items-center md:items-start gap-3">
                   <motion.img
                     src={tip.avatar}
@@ -170,9 +167,7 @@ const RecentTips = () => {
                   </motion.button>
                 </div>
 
-                {/* Right: Content */}
                 <div className="flex-1">
-                  {/* Category Badge */}
                   <motion.span
                     className="inline-block bg-green-600 text-white text-xs px-3 py-1 rounded-full mb-2"
                     initial={{ scale: 0 }}
@@ -183,7 +178,6 @@ const RecentTips = () => {
                     {tip.category}
                   </motion.span>
 
-                  {/* Title */}
                   <motion.h3
                     className="text-xl font-bold text-gray-800 mb-2"
                     initial={{ x: -20, opacity: 0 }}
@@ -195,7 +189,6 @@ const RecentTips = () => {
                     {tip.title}
                   </motion.h3>
 
-                  {/* Preview Text */}
                   <motion.p
                     className="text-gray-600 text-sm mb-3 leading-relaxed"
                     initial={{ opacity: 0 }}
@@ -205,7 +198,6 @@ const RecentTips = () => {
                     {tip.preview}
                   </motion.p>
 
-                  {/* Meta Info */}
                   <motion.div
                     className="flex flex-wrap items-center gap-4 text-xs text-gray-500"
                     initial={{ y: 10, opacity: 0 }}
@@ -229,7 +221,6 @@ const RecentTips = () => {
           ))}
         </motion.div>
 
-        {/* View All Button */}
         <motion.div
           className="text-center mt-10"
           initial={{ y: 30, opacity: 0 }}
@@ -242,7 +233,7 @@ const RecentTips = () => {
             whileTap={{ scale: 0.95 }}
           >
             View All Tips →
-          </motion.button>
+          </motion.button> 
         </motion.div>
       </div>
     </section>

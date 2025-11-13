@@ -9,20 +9,26 @@ import Swal from "sweetalert2";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logOut } = use(AuthContext);
+
   const handleLogout = () => {
-    logOut().then(() => {
-      Swal.fire({
-        title: "LogOut Successfully",
-        icon: "success",
-        draggable: true,
+    logOut()
+      .then(() => {
+        Swal.fire({
+          title: "Logged Out Successfully",
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
+          toast: true,
+          position: "top-end",
+        });
+      })
+      .catch(() => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
       });
-    }).catch(() => {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
-      });
-    })
   };
 
   const activeRoutes = ({ isActive }) =>
@@ -77,6 +83,7 @@ const Navbar = () => {
           </NavLink>
         </motion.div>
       </div>
+
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <motion.li
@@ -113,15 +120,48 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-end flex items-center gap-3">
-        <motion.img
-          src={icon}
-          alt="User Icon"
-          className="w-10 h-10 rounded-full"
-          initial={{ scale: 0, rotate: -180 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-          whileHover={{ scale: 1.1, rotate: 10 }}
-        />
+        {user && (
+          <div className="dropdown dropdown-end">
+            <motion.div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+              whileHover={{ scale: 1.1 }}
+            >
+              <div className="w-10 rounded-full ring-2 ring-green-600 ring-offset-2">
+                <img
+                  src={user?.photoURL || icon}
+                  alt={user?.displayName || "User"}
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+            </motion.div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow-lg"
+            >
+              <li className="menu-title">
+                <span className="text-green-700 font-bold">
+                  {user?.displayName || "User"}
+                </span>
+              </li>
+              <li>
+                <a className="text-sm text-gray-600">{user?.email}</a>
+              </li>
+              <li>
+                <NavLink to="/my-activities">My Activities</NavLink>
+              </li>
+              <li>
+                <a onClick={handleLogout} className="text-red-600">
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </div>
+        )}
 
         <motion.div
           initial={{ x: 50, opacity: 0 }}
@@ -131,7 +171,7 @@ const Navbar = () => {
           {user ? (
             <motion.button
               onClick={handleLogout}
-              className="btn bg-red-600 hover:bg-red-700 text-white"
+              className="btn bg-red-600 hover:bg-red-700 text-white btn-sm"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >

@@ -7,7 +7,7 @@ import { FaEye } from "react-icons/fa6";
 import { LuEyeClosed } from "react-icons/lu";
 
 const Register = () => {
-  const { createUser, setUser } = useContext(AuthContext);
+  const { createUser, setUser, signInWithGoogle } = useContext(AuthContext);
   const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -49,18 +49,78 @@ const Register = () => {
           position: "top-end",
           icon: "success",
           title: "Registration Successful!",
+          text: `Welcome ${name}! 🌿`,
           showConfirmButton: false,
-          timer: 1500,
+          timer: 2000,
+          toast: true,
         });
+        form.reset();
         navigate("/");
       })
-      .catch((e) => {
+      .catch((error) => {
+        let errorMessage = "Registration failed!";
+        if (error.code === "auth/email-already-in-use") {
+          errorMessage = "Email already in use!";
+        } else if (error.code === "auth/weak-password") {
+          errorMessage = "Password is too weak!";
+        }
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: e.message,
+          text: errorMessage,
+          confirmButtonColor: "#16a34a",
         });
       })
+      .finally(() => setLoading(false));
+  };
+
+  const handleGoogleSignIn = () => {
+    console.log("Google Sign-In clicked"); // Debug log
+    setLoading(true);
+
+    signInWithGoogle()
+      .then((result) => {
+        console.log("Google Sign-In Success:", result.user); // Debug log
+        const user = result.user;
+        setUser(user);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Welcome!",
+          text: `Logged in as ${user.displayName || user.email} 🌿`,
+          showConfirmButton: false,
+          timer: 2000,
+          toast: true,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Google Sign-In Error:", error); // Debug log
+        console.error("Error Code:", error.code);
+        console.error("Error Message:", error.message);
+
+        let errorMessage = "Google Sign-In failed!";
+
+        if (error.code === "auth/popup-closed-by-user") {
+          errorMessage = "Sign-in popup was closed!";
+        } else if (error.code === "auth/cancelled-popup-request") {
+          errorMessage = "Sign-in was cancelled!";
+        } else if (error.code === "auth/unauthorized-domain") {
+          errorMessage =
+            "This domain is not authorized. Add it in Firebase Console!";
+        } else if (error.code === "auth/popup-blocked") {
+          errorMessage = "Popup was blocked by browser!";
+        }
+
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: errorMessage,
+          footer: `Error Code: ${error.code}`,
+          confirmButtonColor: "#16a34a",
+        });
+      })
+
       .finally(() => setLoading(false));
   };
 
@@ -72,7 +132,6 @@ const Register = () => {
       transition={{ duration: 0.8 }}
     >
       <div className="hero-content flex-col lg:flex-row-reverse">
-        
         <motion.div
           className="text-center lg:text-left"
           initial={{ x: 100, opacity: 0 }}
@@ -80,7 +139,7 @@ const Register = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <h1 className="text-5xl font-bold text-green-700">
-            Join <span className="text-blue-500">EcoTrack</span>!
+            Join <span className="text-blue-500">EcoTrac</span>!
           </h1>
           <p className="py-6 text-gray-600">
             Join our green community and start tracking your eco-friendly
@@ -88,7 +147,6 @@ const Register = () => {
           </p>
         </motion.div>
 
-        
         <motion.div
           className="card bg-white/90 backdrop-blur-md w-full max-w-sm shadow-2xl border border-green-100"
           initial={{ scale: 0.8, opacity: 0 }}
@@ -119,12 +177,12 @@ const Register = () => {
                 required
               />
 
-              <label className="label font-semibold">Photo Url</label>
+              <label className="label font-semibold">Photo URL</label>
               <input
                 name="photo"
                 type="text"
                 className="input input-bordered w-full"
-                placeholder="Photo URL"
+                placeholder="Photo URL (optional)"
               />
 
               <label className="label font-semibold">Password</label>
@@ -143,7 +201,11 @@ const Register = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-3 text-gray-500 hover:text-green-600"
                 >
-                  {showPassword ? <LuEyeClosed size={20} /> : <FaEye size={20} />}
+                  {showPassword ? (
+                    <LuEyeClosed size={20} />
+                  ) : (
+                    <FaEye size={20} />
+                  )}
                 </button>
               </div>
 
@@ -176,14 +238,22 @@ const Register = () => {
               </motion.button>
             </fieldset>
 
-            
+            {/* OR Divider */}
             <div className="flex items-center justify-center my-4">
               <div className="flex-grow border-t border-gray-300"></div>
               <span className="px-3 text-gray-500 font-semibold">OR</span>
               <div className="flex-grow border-t border-gray-300"></div>
             </div>
 
-            <button className="btn bg-white text-black border-gray-300 hover:bg-gray-50 w-full">
+            {/* Google Sign-In Button */}
+            <motion.button
+              type="button"
+              onClick={handleGoogleSignIn}
+              disabled={loading}
+              className="btn bg-white text-black border-gray-300 hover:bg-gray-50 w-full"
+              whileHover={{ scale: loading ? 1 : 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               <svg
                 aria-label="Google logo"
                 width="16"
@@ -211,8 +281,8 @@ const Register = () => {
                   ></path>
                 </g>
               </svg>
-              Register with Google
-            </button>
+              {loading ? "Signing in..." : "Register with Google"}
+            </motion.button>
           </form>
         </motion.div>
       </div>

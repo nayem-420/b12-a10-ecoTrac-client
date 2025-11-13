@@ -17,7 +17,7 @@ const AddChallenge = () => {
     };
 
     // Save to database
-    console.log(newChallenge);
+    // console.log(newChallenge);
 
     Swal.fire({
       icon: "success",
