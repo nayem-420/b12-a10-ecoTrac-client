@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ecoTracLogo from "../assets/ecoTrac-logo.png";
 
 const Loading = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -25,7 +26,7 @@ const Loading = () => {
             transition={{ duration: 1.5, ease: "easeInOut" }}
           >
             <motion.img
-              src="/src/assets/ecoTrac-logo.png"
+              src={ecoTracLogo}
               alt="EcoTrac Logo"
               className="w-16 h-16"
               initial={{ opacity: 0 }}
